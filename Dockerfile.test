@@ -1,0 +1,16 @@
+FROM golang:1.19-alpine
+
+WORKDIR /app
+
+COPY go.mod .
+
+RUN go mod download
+
+COPY . .
+
+ENV CGO_ENABLED=0
+ENV PORT=":2565"
+ENV DATABASE_URL="postgres://root:root@db/assessment?sslmode=disable"
+ENV AUTH_TOKEN="November 10, 2009"
+
+CMD go test -v --tags=integration ./...
